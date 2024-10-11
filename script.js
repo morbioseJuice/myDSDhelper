@@ -1,9 +1,7 @@
 var percents = Array.prototype.slice.call(document.getElementsByTagName("h3"), 0);
 for (var i = 0; i < percents.length; i++) {
-	if (percents[i].innerText == "Assignments") {
-		percents[i] = 0;
-	} else {
-		percents[i] = parseInt(percents[i].innerText.slice(15,percents[i].innerText.length-18));
+	if (percents[i].childElementCount < 2) {percents[i] = 0} else {
+		percents[i] = parseInt(percents[i].children[1].innerText.slice(1,percents[i].children[1].innerText.length-18));
 	}
 }
 
@@ -27,8 +25,8 @@ for (var i = 0; i < grades.length; i++) {
 	var index = sections[0];
 	var j = 0;
 	while(i >= index) {
-		index+=sections[j];
 		j++;
+		index+=sections[j];
 	}
 	grades[i] = grades[i].innerText.split("/");
 	if (grades[i].length == 1) {
@@ -36,10 +34,10 @@ for (var i = 0; i < grades.length; i++) {
 	} else if (grades[i][1] == 0) {
 		grades[i] = 0;
 	} else{
-		newGrade[i][1] = ((grades[i][1]*percents[j])/sections[j]/4);
 		grades[i] = grades[i][0]/grades[i][1]
 	}
 	newGrade[i][0] = ((grades[i]*percents[j])/sections[j]);
+	newGrade[i][1] = (percents[j]/sections[j]);
 }
 
 grades = Array.prototype.slice.call(document.getElementsByClassName("margin-left-10"), 0);
