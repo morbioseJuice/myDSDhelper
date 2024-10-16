@@ -45,3 +45,27 @@ grades = grades.filter(grade => grade.className === "margin-left-10");
 for (var i = 0; i < grades.length; i++) {
 	grades[i].innerHTML = grades[i].innerText + " (" + newGrade[i][0].toFixed(2) + "% / " + newGrade[i][1].toFixed(2) + "%)";
 }
+
+var total = 0;
+var newSections = 0;
+
+percentElements = document.getElementsByTagName("h3")
+
+// This is a loop that shows what the total percent that each section is earning.
+for (var i = 0; i < sections.length; i++) { // Goes through every section
+	for (var j = 0; j < sections[i]; j++) {
+		
+		if (sections.length > 1) { // If there is only one section, this breaks the code. This didn't actually fix it unfortunately.
+			newSections = sections.slice(0, i) // This makes sure that for section other than the first one, the values are correct.
+			newSections = newSections.reduce((accumulator, currentValue) => accumulator + currentValue, 0); // This adds all the values of the slice together.
+		} else {
+			newSections = 0;
+		}
+		
+		total += newGrade[j + newSections][0] //This repeats through and increases the grade
+	}
+	
+	percentElements[i].innerText += " " + Math.round(total * 100) / 100 + "%/" + percents[i] + "%" // This displays the percent. For some reason it changes the styling. NEEDS TO BE FIXED.
+	
+	total = 0; // Resets the total back to zero.
+}
